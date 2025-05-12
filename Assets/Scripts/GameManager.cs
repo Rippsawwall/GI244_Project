@@ -10,12 +10,9 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject gamePanel;
     public GameObject gameOverPanel;
-    public GameObject creditPanel;
     
     public Button startButton;
     public Button homeButton;
-    public Button creditButton;
-    public Button backButton;
     
     private PlayerController playerController; // Reference ไปที่ PlayerController
 
@@ -36,15 +33,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // ค้นหา "Car" PlayerController มาใช้
-        playerController = GameObject.Find("Car").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         
         MainMenu(); // เริ่มเกมด้วย Main Menu
         
         startButton.onClick.AddListener(StartGame);
         homeButton.onClick.AddListener(Home);
-        creditButton.onClick.AddListener(Credit);
-        backButton.onClick.AddListener(MainMenu);
     }
 
     public void MainMenu()
@@ -52,7 +46,6 @@ public class GameManager : MonoBehaviour
         mainMenuPanel.SetActive(true);
         gamePanel.SetActive(false);
         gameOverPanel.SetActive(false);
-        creditPanel.SetActive(false);
         
         Time.timeScale = 0f; // หยุดเวลาในเกม
         playerController.enabled = false; // ปิดการควบคุมผู้เล่น
@@ -63,7 +56,6 @@ public class GameManager : MonoBehaviour
         mainMenuPanel.SetActive(false);
         gamePanel.SetActive(true);
         gameOverPanel.SetActive(false);
-        creditPanel.SetActive(false);
         
         Time.timeScale = 1f; // เริ่มเวลาในเกม
         playerController.enabled = true; // เปิดการควบคุมผู้เล่น
@@ -74,7 +66,6 @@ public class GameManager : MonoBehaviour
         mainMenuPanel.SetActive(false);
         gamePanel.SetActive(true);
         gameOverPanel.SetActive(true); // แสดง Game Over Panel
-        creditPanel.SetActive(false);
         
         Time.timeScale = 0f; // หยุดเวลาในเกม
         playerController.enabled = false; // ปิดการควบคุมผู้เล่น
@@ -85,7 +76,6 @@ public class GameManager : MonoBehaviour
         mainMenuPanel.SetActive(true);
         gamePanel.SetActive(false);
         gameOverPanel.SetActive(false);
-        creditPanel.SetActive(false);
         
         Time.timeScale = 1f;
         var activeScene = SceneManager.GetActiveScene();
@@ -96,8 +86,7 @@ public class GameManager : MonoBehaviour
     {
         mainMenuPanel.SetActive(false);
         gamePanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        creditPanel.SetActive(true); // แสดง Credit Panel
+        gameOverPanel.SetActive(false); 
         
         Time.timeScale = 0f; // หยุดเวลาในเกม
         playerController.enabled = false; // ปิดการควบคุมผู้เล่น

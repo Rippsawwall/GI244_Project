@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,11 +7,11 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float mass = 1f;
     public float fuel = 100f;
-    public float maxFuel = 100f;
     
     private float currentSpeed;
     private float currentMass;
     private bool isGameOver = false;
+    private float currentFuel;
     
     private Rigidbody rb;
     private InputAction moveAction;
@@ -30,10 +31,12 @@ public class PlayerController : MonoBehaviour
     {
         currentSpeed = speed;
         currentMass = mass;
+        currentFuel = fuel;
     }
 
     void Update()
     {
+        currentFuel -= 0.05f;
         // ถ้าเกมจบแล้ว ไม่ต้องให้ผู้เล่นขยับ
         if(isGameOver) return;
         
@@ -51,16 +54,40 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
+
+        if (currentFuel <= 0)
+        {
+            isGameOver = true;
+            GameManager.Instance.GameOver();
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        // ถ้าชนกับวัตถุที่มี tag "Obstacle" ให้จบเกม
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             isGameOver = true;
             GameManager.Instance.GameOver();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Fuel"))
+        {
+            currentFuel = fuel;
+            Destroy(other.gameObject);
+        }
+    }
+
+    public float GetCurrentSpeed()
+    {
+        return currentSpeed;
+    }
+
+    public float getFuel()
+    {
+        return currentFuel;
     }
     
 }

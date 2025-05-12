@@ -27,11 +27,11 @@ public class SpawnManager : MonoBehaviour
             return;
         }
         
-        // สุ่ม Spawn (Boost, เหรียญ, หรือสิ่งกีดขวาง)
+        // สุ่ม Spawn (Fuel, เหรียญ, หรือสิ่งกีดขวาง)
         float randomValue = Random.value;
         int spawnIndex = Random.Range(0, spawnPoint.Length);
         
-        if (randomValue < 0.1f) // (โอกาส Spawn Booster) 
+        if (randomValue <= 0.25f)
         {
             Instantiate(fuelPrefab, spawnPoint[spawnIndex].position, Quaternion.identity);
         }
